@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": ["Bash(*)"]
+  },
+  "enabledMcpjsonServers": ["github", "postgres", "slack", "notion", "linear", "figma"]
+}

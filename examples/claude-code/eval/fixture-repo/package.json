@@ -1,0 +1,3 @@
+{ "name": "shopfront-api", "private": true,
+  "scripts": { "dev": "tsx watch src/server.ts", "test": "vitest run", "test:unit": "vitest run src", "lint": "eslint . --max-warnings 0", "typecheck": "tsc --noEmit", "db:migrate": "prisma migrate deploy" },
+  "packageManager": "pnpm@9.12.0" }

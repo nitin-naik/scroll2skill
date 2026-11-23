@@ -1,0 +1,32 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ffmpeg
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; else brew install ffmpeg; fi
+      - run: pip install pytest
+      - run: pytest -q tests
+      - name: Lint shell
+        run: bash -n setup.sh && bash -n tests/linux-e2e.sh
+
+  linux-e2e:
+    # Fresh Ubuntu container: setup.sh from scratch, unit tests, then a full study.py run on a
+    # generated video (speech + on-screen text). Hermetic; uses the tiny whisper model.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker run --rm -v "$PWD":/repo:ro ubuntu:24.04 bash /repo/tests/linux-e2e.sh

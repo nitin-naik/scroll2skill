@@ -1,0 +1,60 @@
+{
+  "videos": [
+    {
+      "key": "youtube:uRU2mVSmTyc",
+      "url": "https://www.youtube.com/watch?v=uRU2mVSmTyc",
+      "creator": "SpactYT",
+      "upload_date": "20250623",
+      "used": true
+    },
+    {
+      "key": "youtube:RMBzR2DnEss",
+      "url": "https://www.youtube.com/watch?v=RMBzR2DnEss",
+      "creator": "THE EDITOR GUY",
+      "upload_date": "20260814",
+      "used": false
+    },
+    {
+      "key": "youtube:MYdKBuA3XF8",
+      "url": "https://www.youtube.com/watch?v=MYdKBuA3XF8",
+      "creator": "ryancollinsvideo",
+      "upload_date": "20220906",
+      "used": false
+    },
+    {
+      "key": "youtube:oy0jQZHv2hk",
+      "url": "https://www.youtube.com/watch?v=oy0jQZHv2hk",
+      "creator": "vidIQ",
+      "upload_date": "20261107",
+      "used": true
+    },
+    {
+      "key": "youtube:AQh2eC5H3tc",
+      "url": "https://www.youtube.com/watch?v=AQh2eC5H3tc",
+      "creator": "VID HQ",
+      "upload_date": "20230123",
+      "used": false
+    },
+    {
+      "key": "youtube:rI3H6tJlD00",
+      "url": "https://www.youtube.com/watch?v=rI3H6tJlD00",
+      "creator": "Descript",
+      "upload_date": "20240229",
+      "used": false
+    },
+    {
+      "key": "instagram:DambEp1igDW",
+      "url": "https://www.instagram.com/p/DambEp1igDW/",
+      "creator": "Sky Tan",
+      "upload_date": "20260710",
+      "used": true
+    },
+    {
+      "key": "youtube:VCCB_WH0vug",
+      "url": "https://www.youtube.com/watch?v=VCCB_WH0vug",
+      "creator": "Igor",
+      "upload_date": "20250222",
+      "used": true
+    }
+  ]
+}
