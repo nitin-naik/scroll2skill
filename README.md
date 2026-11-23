@@ -1,10 +1,28 @@
 # scroll2skill
 
-**Turn the videos you saved "for later" into agent skills, and find out whether they actually help.**
+[![CI](https://github.com/nitin-naik/scroll2skill/actions/workflows/ci.yml/badge.svg)](https://github.com/nitin-naik/scroll2skill/actions/workflows/ci.yml) [![Release](https://img.shields.io/github/v/release/nitin-naik/scroll2skill)](https://github.com/nitin-naik/scroll2skill/releases) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Point it at reels, Shorts, YouTube videos, a playlist or a folder, and name the job you want to get better at. It watches them (frames, on-screen text, transcript), merges what the creators teach (agreement = confidence, disagreement = cited variants), and writes 1–4 [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) for that job. Then it tests each skill cold and, optionally, blind against plain Claude.
+**Turn your graveyard of saved videos into agent skills, and find out blind whether they beat plain Claude.**
 
-That last step is the point. A skill only helps when the videos contain something your model doesn't already know: a new tool, a recent change, a niche method, your field's current practice. In our three demos, skills built from recent Claude Code talks **beat plain Claude 3/3**; skills built from general short-form-video tips **won 0/2**, because the model already knew it; and skills built from three short videos on Claude Code hooks **tied 2/2** and were refused. The blind test tells you which case you're in before you install anything.
+I pointed Claude at videos I'd saved "for later", had it write skills from them, then blind-tested each skill against plain Claude on a task it hadn't seen:
+
+| Videos | Result |
+|---|---|
+| 8 recent talks on Claude Code | skills **won 3/3** |
+| 8 short-form creator tips (hooks, captions, editing) | skills **lost 2/2**: the model already knew it all |
+| 3 short videos on Claude Code hooks | **tied 2/2**, so the gate refused to install them |
+
+A skill only helps when the videos hold something your model doesn't already know: a new tool, a recent change, a niche method. scroll2skill writes the skills *and* tells you which case you're in before you install anything.
+
+```bash
+git clone https://github.com/nitin-naik/scroll2skill ~/.scroll2skill && ~/.scroll2skill/setup.sh
+```
+
+Then in Claude Code: `/scroll2skill <links, playlist or folder> — <the job you want to get better at>`.
+
+## What it does
+
+Point it at reels, Shorts, YouTube videos, a playlist or a folder, and name the job. It watches them (frames, on-screen text, transcript), merges what the creators teach (agreement = confidence, disagreement = cited variants), and writes 1–4 [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) for that job. Then it tests each skill cold and, optionally, blind against plain Claude.
 
 - **Any platform.** YouTube (videos, Shorts, playlists, channels, Watch Later), Instagram, TikTok, X, LinkedIn, Facebook, Vimeo, Reddit, about 1,800 sites via yt-dlp, plus local files.
 - **Free and local.** Transcription runs on your machine with whisper.cpp; on-screen text uses Apple Vision on macOS or tesseract on Linux. No API keys.
@@ -59,11 +77,13 @@ All raw outputs, friction logs, blind keys and judgments are in [`examples/claud
 
 ## Install
 
+One line:
+
 ```bash
-git clone https://github.com/nitin-naik/scroll2skill && cd scroll2skill
-./setup.sh          # checks, asks, then installs yt-dlp, ffmpeg, whisper.cpp + a 547 MB speech model; links the skill
-./setup.sh --check  # report only
+git clone https://github.com/nitin-naik/scroll2skill ~/.scroll2skill && ~/.scroll2skill/setup.sh
 ```
+
+`setup.sh` checks what you have, asks before installing anything, then installs yt-dlp, ffmpeg, whisper.cpp and a 547 MB speech model, and links the skill. `~/.scroll2skill/setup.sh --check` only reports. To update later: `git -C ~/.scroll2skill pull`.
 
 - **macOS:** uses Homebrew.
 - **Ubuntu/Debian:** needs `sudo` (apt packages), installs yt-dlp with pipx and builds whisper.cpp from source (a few minutes). Both land in `~/.local/bin`; the script finds them there even if that isn't on your PATH. A CI job runs this whole path in a fresh Ubuntu container on every push (`tests/linux-e2e.sh`, using the tiny speech model): setup, unit tests, then a full study on a generated video with known speech and on-screen text.
