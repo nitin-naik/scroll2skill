@@ -1,0 +1,4 @@
+write_X=base
+write_Y=skill
+audit_X=base
+audit_Y=skill

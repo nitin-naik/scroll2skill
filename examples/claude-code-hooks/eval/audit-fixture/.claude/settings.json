@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "bash",
+        "hooks": [ { "type": "command", "command": ".claude/hooks/guard.sh" } ] },
+      { "matcher": "Edit|Write",
+        "hooks": [ { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/protect-env.sh" } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "*",
+        "hooks": [ { "type": "command", "command": "npm test" } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/keep-going.sh" } ] }
+    ]
+  }
+}

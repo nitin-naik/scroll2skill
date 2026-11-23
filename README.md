@@ -4,7 +4,7 @@
 
 Point it at reels, Shorts, YouTube videos, a playlist or a folder, and name the job you want to get better at. It watches them (frames, on-screen text, transcript), merges what the creators teach (agreement = confidence, disagreement = cited variants), and writes 1–4 [Agent Skills](https://docs.claude.com/en/docs/claude-code/skills) for that job. Then it tests each skill cold and, optionally, blind against plain Claude.
 
-That last step is the point. A skill only helps when the videos contain something your model doesn't already know: a new tool, a recent change, a niche method, your field's current practice. In our two demos, skills built from recent Claude Code talks **beat plain Claude 3/3**; skills built from general short-form-video tips **won 0/2**, because the model already knew it. The blind test tells you which case you're in before you install anything.
+That last step is the point. A skill only helps when the videos contain something your model doesn't already know: a new tool, a recent change, a niche method, your field's current practice. In our three demos, skills built from recent Claude Code talks **beat plain Claude 3/3**; skills built from general short-form-video tips **won 0/2**, because the model already knew it; and skills built from three short videos on Claude Code hooks **tied 2/2** and were refused. The blind test tells you which case you're in before you install anything.
 
 - **Any platform.** YouTube (videos, Shorts, playlists, channels, Watch Later), Instagram, TikTok, X, LinkedIn, Facebook, Vimeo, Reddit, about 1,800 sites via yt-dlp, plus local files.
 - **Free and local.** Transcription runs on your machine with whisper.cpp; on-screen text uses Apple Vision on macOS or tesseract on Linux. No API keys.
@@ -12,12 +12,13 @@ That last step is the point. A skill only helps when the videos contain somethin
 - **Tested, not just written.** Each skill is run cold by a fresh agent that reports where it had to guess and what it was never told. Optionally, it's compared blind against plain Claude on a held-back task, and a skill that doesn't win by at least 2 points out of 40 isn't installed.
 - **Safe by default.** It never touches your browser cookies unless you say yes, and it explains why that matters.
 
-## Two worked examples
+## Three worked examples
 
 | Example | Videos | Result vs plain Claude (blind) | Takeaway |
 |---|---|---|---|
 | [`examples/claude-code/`](examples/claude-code/) | 8 YouTube talks and tutorials on Claude Code, incl. Anthropic's own | **won 3/3** after one fix round | Recent, specialist facts the model didn't reliably know |
 | [`examples/short-form-creators/`](examples/short-form-creators/) | 8 Shorts/reels on hooks, captions, editing | **lost 2/2**, two rounds | Mostly common knowledge; skills added length, not substance. Don't install |
+| [`examples/claude-code-hooks/`](examples/claude-code-hooks/) | 3 short YouTube videos on Claude Code hooks, incl. Anthropic's own | **tied 2/2** (1-point margins), gate refused both | Basics the model already knew; the useful find was a bug in the official video |
 
 ### Example 1: 8 videos → 3 Claude Code skills
 
@@ -51,6 +52,10 @@ All raw outputs, friction logs, blind keys and judgments are in [`examples/claud
 ### Example 2: 8 Shorts/reels → 2 creator skills (not worth installing)
 
 [`examples/short-form-creators/`](examples/short-form-creators/) ran the current rules on 8 public videos about hooks, script structure, captions and editing for retention. The pipeline caught a factually impossible example in one source, skipped two low-specificity videos (one a 170k-view list of hook names with no examples), and cited every technique with a timestamp. The two skills it wrote still lost to plain Claude in both rounds (29–34 and 32–33 on the final round): the videos taught what the model already knew, so the skills only added length. Its [README](examples/short-form-creators/README.md) has the details.
+
+### Example 3: 3 videos → 2 hooks skills (refused by the gate)
+
+[`examples/claude-code-hooks/`](examples/claude-code-hooks/) is an unattended run by a fresh agent following SKILL.md end to end. It wrote a skill for writing hooks and one for auditing them. Each won or lost against plain Claude by 1 point out of 40 in every round (33–32, 34–35, 35–34, 35–34), so both count as ties and neither was installed. Plain Claude already knew the hook basics (exit 2, JSON deny, `$CLAUDE_PROJECT_DIR`); the skills' extra coverage was real but cost focus. The most useful output was a note that the force-push check in Anthropic's own hooks video misses cases. The 26 workflow problems that agent logged became the current rules: the 2-point margin, a held-back test task written before drafting, and a fixed judge prompt.
 
 ## Install
 
